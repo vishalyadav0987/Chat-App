@@ -1,5 +1,6 @@
 const UserSchema = require('../modals/UserSchema');
 const bcrypt = require('bcryptjs');
+const generateToken = require('../utils/generateToken');
 
 const Register = async (req, res) => {
     // res.send("This register routr");
@@ -27,12 +28,14 @@ const Register = async (req, res) => {
             gender,
             profilePic: gender === "male" ? boyProfile : girlProfile,
         });
-        if(newUser){
+        if (newUser) {
+            // GENERATE JWT TOKEN
+            generateToken(newUser._id, res);
             const users = await newUser.save();
             res.status(201).json({ success: true, users, msg: "User successfull register!" });
         }
-        else{
-            res.status(400).json({ success: false, msg: "Invalid user data" }); 
+        else {
+            res.status(400).json({ success: false, msg: "Invalid user data" });
         }
 
     } catch (error) {
