@@ -64,6 +64,13 @@ const Login = async (req, res) => {
 }
 const Logout = async (req, res) => {
     // res.send("This logout routr");
+    try {
+        res.cookie("token","",{maxAge:0});
+        res.status(200).json({ success: true, msg: "User succesfully logout!" });
+    } catch (error) {
+        console.log("Erorr in auth controller login function: ", error.message)
+        res.status(500).json({ success: false, error: error.message, msg: "Something went wrong!" });
+    }
     
 }
 
