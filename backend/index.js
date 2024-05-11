@@ -2,9 +2,11 @@ const express = require("express");
 const app = express();
 require("dotenv").config();
 const connectDB = require('./connectDB/connect');
+const authRoutes = require('./routes/auth.route');
 
 app.use(express.json());
 
+app.use('/api/v1/auth',authRoutes);
 app.get('/test', (req, res) => {
     res.send(`<h1>This is chat app backend</h1>`);
 });
