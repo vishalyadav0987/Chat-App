@@ -1,12 +1,20 @@
 const express = require("express");
 const app = express();
 require("dotenv").config();
-const connectDB = require('./connectDB/connect');
 const authRoutes = require('./routes/auth.route');
+const messageRoutes = require('./routes/message.route');
+const userRoutes = require('./routes/user.route');
+const connectDB = require('./connectDB/connect');
+const cookieParser = require("cookie-parser");
 
+app.use(cookieParser());
 app.use(express.json());
 
-app.use('/api/v1/auth',authRoutes);
+
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/message', messageRoutes);
+app.use('/api/v1/user', userRoutes);
+
 app.get('/test', (req, res) => {
     res.send(`<h1>This is chat app backend</h1>`);
 });
