@@ -1,6 +1,5 @@
 const ConversionSchema = require("../modals/ConversionSchema");
 const MessageSchema = require("../modals/MessageSchema");
-const UserSchema = require("../modals/UserSchema");
 
 const sendMessage = async (req, res) => {
     // console.log("Li" + req.params.id);
@@ -39,10 +38,28 @@ const sendMessage = async (req, res) => {
         });
     } catch (error) {
         console.log("Error in send Message function: ", error.message);
-        res.status(500).json({ success: false, mesg: "Internal sever error!", error: error.message });
+        res.status(500).json({ success: false, msg: "Internal sever error!", error: error.message });
     }
 }
+
+const getMessage = async (req, res) => {
+    try {
+        const { id: userToChat } = req.params;
+        const { _id: senderId } = req.user;
+        const conversation = await ConversionSchema.findOne({
+            participants: { $all: [senderId, userToChat] },
+        }).populate("messages");
+
+        if(!conversation) return res.status(200).json([]);
+        res.status(200).json({ success: true, messagesWithUser: conversation.messages })
+    } catch (error) {
+        console.log("Error in get Message function: ", error.message);
+        res.status(500).json({ success: false, msg: "Internal sever error!", error: error.message });
+    }
+}
+
+
 module.exports = {
     sendMessage,
-
+    getMessage,
 }

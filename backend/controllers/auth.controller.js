@@ -48,7 +48,7 @@ const Login = async (req, res) => {
     try {
         const { username, password } = req.body;
         const user = await UserSchema.findOne({username});
-        const isPassword = await bcrypt.compare(password,user.password || '');
+        const isPassword = await bcrypt.compare(password,user?.password || '');
 
         if(!user || !isPassword){
             res.status(400).json({ success: false, msg: "Invalid Crendential!" });
