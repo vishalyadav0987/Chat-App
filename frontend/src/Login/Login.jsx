@@ -3,7 +3,7 @@ import React from 'react'
 const Login = () => {
     return (
         <>
-            <div className="flex items-center justify-center h-screen bg-slate-500">
+            <div className="flex items-center justify-center h-[100vh] overflow-hidden">
                 <div className="bg-white p-8 rounded shadow-md w-1/3">
                     <h2 className="text-3xl font-semibold mb-4">Login</h2>
                     <form>
