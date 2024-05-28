@@ -1,19 +1,27 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Messages from './Messages'
 import MessageInput from './MessageInput'
 import { TiMessages } from "react-icons/ti";
+import useConversation from '../../Store/userConversation';
 
 const MessageContainer = () => {
-    const notSelected = false;
+    // const notSelected = true;
+    // const notSelected = false;
+    const { selectedConversation, setSelectedConversation } = useConversation();
+    // console.log(selectedConversation)
+    useEffect(()=>{
+        // clean up fun ction for after log out those user is slected is unselct ho jaye
+        return () => setSelectedConversation(null);
+    },[setSelectedConversation])
     return (
-        <div className={`md:min-w-[450px] flex flex-col bg-slate-50 rounded-e-md sm:h-[550px] md:h-[580px] ${notSelected ? "" : "items-center justify-center"} border-[1px] border-[#c5c5c5]`}>
+        <div className={`md:min-w-[450px] flex flex-col bg-slate-50 rounded-e-md sm:h-[550px] md:h-[580px] ${selectedConversation ? "" : "items-center justify-center"} border-[1px] border-[#c5c5c5]`}>
             {
-                notSelected ? (
+                selectedConversation ? (
                     <>
                         <div className="bg-slate-500 px-4 py-3 rounded-b-none rounded-e">
-                            <span className='label-text text-white text-xl font-bold'>To:
+                            <span className='label-text text-white text-xl font-semibold'>To:
                                 <span>
-                                    Vishal Yadav
+                                    {selectedConversation.fullname}
                                 </span>
                             </span>
 
