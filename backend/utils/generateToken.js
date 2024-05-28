@@ -5,8 +5,9 @@ const generateToken = async (userId, res) => {
         expiresIn: '7d',
     });
     res.cookie('token', token, {
-        httpOnly: true, // prevent the xss attack
-        maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'development', // Use secure flag in production
+        sameSite: 'strict',
     })
 }
 

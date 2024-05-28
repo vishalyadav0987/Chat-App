@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+// const cors = require('cors');
 require("dotenv").config();
 const authRoutes = require('./routes/auth.route');
 const messageRoutes = require('./routes/message.route');
@@ -7,13 +8,18 @@ const userRoutes = require('./routes/user.route');
 const connectDB = require('./connectDB/connect');
 const cookieParser = require("cookie-parser");
 
+
+// app.use(cors({
+//     origin: 'http://localhost:5173',
+//     credentials: true,
+// }));
 app.use(cookieParser());
 app.use(express.json());
 
 
-app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/message', messageRoutes);
-app.use('/api/v1/user', userRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/message', messageRoutes);
+app.use('/api/user', userRoutes);
 
 app.get('/test', (req, res) => {
     res.send(`<h1>This is chat app backend</h1>`);

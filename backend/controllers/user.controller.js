@@ -2,7 +2,8 @@ const UserSchema = require('../modals/UserSchema');
 
 const getAllUser = async (req, res) => {
     try {
-        const { _id: loggedInUserId } = req.user;
+        // const { _id: loggedInUserId } = req.user;
+        const loggedInUserId = req.user._id;
         const allUsers = await UserSchema.find({ _id: { $ne: loggedInUserId } })
         // woh use jinki id logged user se alag hai
         res.status(200).json({ success: true, allUsers });

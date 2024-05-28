@@ -31,11 +31,12 @@ const sendMessage = async (req, res) => {
 
         // this will run in parallel
         Promise.all([conversation.save(), newMessage.save()]);
-        res.status(201).json({
-            success: true,
-            msg: "Message succesfully sent!",
-            conversation: newMessage
-        });
+        // res.status(201).json({
+        //     success: true,
+        //     msg: "Message succesfully sent!",
+        //     conversation: newMessage
+        // });
+        res.status(201).json(newMessage);
     } catch (error) {
         console.log("Error in send Message function: ", error.message);
         res.status(500).json({ success: false, msg: "Internal sever error!", error: error.message });
@@ -51,7 +52,9 @@ const getMessage = async (req, res) => {
         }).populate("messages");
 
         if(!conversation) return res.status(200).json([]);
-        res.status(200).json({ success: true, messagesWithUser: conversation.messages })
+        // res.status(200).json({ success: true, messagesWithUser: conversation.messages })
+        const messages = conversation.messages
+        res.status(200).json(messages)
     } catch (error) {
         console.log("Error in get Message function: ", error.message);
         res.status(500).json({ success: false, msg: "Internal sever error!", error: error.message });

@@ -3,7 +3,7 @@ const UserSchema = require('../modals/UserSchema');
 
 const protectRouteMiddleware = async (req, res, next) => {
     try {
-        const token = req.cookies.token;
+        const token = req.cookies?.token;
         if (!token) {
             return res.status(401).json({ success: false, msg: "Unauhtorized - No token provided" });
         }
