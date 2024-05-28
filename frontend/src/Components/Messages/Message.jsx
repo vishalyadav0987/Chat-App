@@ -1,17 +1,23 @@
 import React from 'react'
 import { useAuthContext } from '../../Context/AuthContext'
 import useConversation from '../../Store/userConversation';
+import { extractTime } from '../../utils/extractdbTime';
+
+
 
 const Message = ({ message }) => {
   const { authUser } = useAuthContext();
+
+
   // console.log(authUser.resData)
   const { selectedConversation } = useConversation();
   const fromMe = message.senderId === authUser.resData._id;
   const chatClassName = fromMe ? "chat-end" : "chat-start";
-  console.log(fromMe,message.senderId,authUser.resData._id,chatClassName)
+  // console.log(fromMe,message.senderId,authUser.resData._id,chatClassName)
   const profilePic = fromMe ? authUser.resData.profilePic : selectedConversation?.profilePic;
   const bubbleColor = fromMe ? 'bg-blue-500' : "";
-  console.log(authUser.resData,message)
+  // console.log(authUser.resData,message)
+  const formattedTime = extractTime(message.createdAt);
   return (
     <div className={`chat ${chatClassName ? chatClassName : "chat-end"}`}>
       <div className="chat-image avatar">
@@ -22,7 +28,7 @@ const Message = ({ message }) => {
       </div>
       <div className={`chat-bubble text-white ${bubbleColor}`}>{message.message}</div>
       <div className={`chat-footer text-xs flex gap-1 items-center text-[#c5c5c5]`}>
-        {new Date(message.createdAt).toLocaleTimeString()}
+        {formattedTime}
         </div>
     </div>
   )
