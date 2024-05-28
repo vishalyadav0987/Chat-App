@@ -1,5 +1,6 @@
 const ConversionSchema = require("../modals/ConversionSchema");
 const MessageSchema = require("../modals/MessageSchema");
+const { getReceiverSocketId, io } = require('../socket/socket');
 
 const sendMessage = async (req, res) => {
     // console.log("Li" + req.params.id);
@@ -36,6 +37,14 @@ const sendMessage = async (req, res) => {
         //     msg: "Message succesfully sent!",
         //     conversation: newMessage
         // });
+
+        // SOCKET FUNCTIONALLITY WILL GO HERE
+
+        const recieverSocketId = getReceiverSocketId(recieverId);
+        if (recieverSocketId) {
+            // io.to(<socke.id>).emit() used to send specific person
+            io.to(recieverSocketId).emit("newMessage", newMessage)
+        }
         res.status(201).json(newMessage);
     } catch (error) {
         console.log("Error in send Message function: ", error.message);
@@ -51,7 +60,7 @@ const getMessage = async (req, res) => {
             participants: { $all: [senderId, userToChat] },
         }).populate("messages");
 
-        if(!conversation) return res.status(200).json([]);
+        if (!conversation) return res.status(200).json([]);
         // res.status(200).json({ success: true, messagesWithUser: conversation.messages })
         const messages = conversation.messages
         res.status(200).json(messages)
