@@ -1,5 +1,5 @@
 const express = require("express");
-const app = express();
+// const app = express();
 // const cors = require('cors');
 require("dotenv").config();
 const authRoutes = require('./routes/auth.route');
@@ -7,10 +7,11 @@ const messageRoutes = require('./routes/message.route');
 const userRoutes = require('./routes/user.route');
 const connectDB = require('./connectDB/connect');
 const cookieParser = require("cookie-parser");
+const { app, server } = require('./socket/socket')
 
 
 // app.use(cors({
-//     origin: 'http://localhost:5173',
+//     origin: 'http://localhost:3000',
 //     credentials: true,
 // }));
 app.use(cookieParser());
@@ -25,11 +26,11 @@ app.get('/test', (req, res) => {
     res.send(`<h1>This is chat app backend</h1>`);
 });
 
-const PORT = 3000 || process.env.PORT;
+const PORT = 5000 || process.env.PORT;
 const start = async () => {
     try {
         await connectDB(process.env.MONGO_URI);
-        app.listen(PORT, () => {
+        server.listen(PORT, () => {
             console.log(`Server running at http://localhost:${PORT}`);
         });
     } catch (error) {
