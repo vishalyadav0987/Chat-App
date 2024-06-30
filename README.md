@@ -9,7 +9,7 @@
 
 ## Description
 
-Chat-App is a full-stack web application designed to streamline the food ordering process. Built using the MEAN stack (MongoDB, Express.js, React.js, and Node.js), this application offers a seamless and interactive user experience for both customers and administrators.
+Chat-App is a full-stack web application designed to streamline process. Built using the MEAN stack (MongoDB, Express.js, React.js, and Node.js), this application offers a seamless and interactive user experience for both customers and administrators.
 
 ---
 
